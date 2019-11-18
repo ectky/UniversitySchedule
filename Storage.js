@@ -1,8 +1,8 @@
 //add new key=>value to the HTML5 storage
 function SaveItem() {
 			
-	var name = document.forms.ShoppingList.name.value;
-	var data = document.forms.ShoppingList.data.value;
+	var name = document.forms.UniversitySchedule.name.value;
+	var data = document.forms.UniversitySchedule.data.value;
 	localStorage.setItem(name, data);
 	doShowAll();
 	
@@ -10,8 +10,8 @@ function SaveItem() {
 //------------------------------------------------------------------------------
 //change an existing key=>value in the HTML5 storage
 function ModifyItem() {
-	var name1 = document.forms.ShoppingList.name.value;
-	var data1 = document.forms.ShoppingList.data.value;
+	var name1 = document.forms.UniversitySchedule.name.value;
+	var data1 = document.forms.UniversitySchedule.data.value;
 	//check if name1 is already exists
 	
 //check if key exists
@@ -19,7 +19,7 @@ function ModifyItem() {
 			{
 			  //update
 			  localStorage.setItem(name1,data1);
-			  document.forms.ShoppingList.data.value = localStorage.getItem(name1);
+			  document.forms.UniversitySchedule.data.value = localStorage.getItem(name1);
 			}
 		
 	
@@ -28,8 +28,8 @@ function ModifyItem() {
 //-------------------------------------------------------------------------
 //delete an existing key=>value from the HTML5 storage
 function RemoveItem() {
-	var name = document.forms.ShoppingList.name.value;
-	document.forms.ShoppingList.data.value = localStorage.removeItem(name);
+	var name = document.forms.UniversitySchedule.name.value;
+	document.forms.UniversitySchedule.data.value = localStorage.removeItem(name);
 	doShowAll();
 }
 //-------------------------------------------------------------------------------------
@@ -39,10 +39,55 @@ function ClearAll() {
 	doShowAll();
 }
 //--------------------------------------------------------------------------------------
+// dynamically load the info of date
+function loadInfo(date) {
+	console.log("date");
+	console.log(date);
+}
+//--------------------------------------------------------------------------------------
 // dynamically populate the table with shopping list items
 //below step can be done via PHP and AJAX too. 
 function doShowAll() {
 	if (CheckBrowser()) {
+		var countOfDays = 35;
+		var today = new Date();
+		var todayDayOfWeek = today.getDay();
+
+		var begginingDay = today.getDate() - todayDayOfWeek + 1;
+		var begginingOfCalendar = new Date(today.getFullYear(), today.getMonth(), begginingDay);
+
+		var days = ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота', 'Неделя'];
+
+		var weeks = "<tr>";
+
+		for (let i = 0; i < days.length; i++) {
+			var tdw = "";
+			if (i === todayDayOfWeek - 1) {
+				tdw = `<td class="currDay">${days[i]}</td>`;
+			} else {
+				tdw = `<td>${days[i]}</td>`;
+			}
+			
+			weeks += tdw;
+		}
+
+		weeks += "</tr><tr>";
+
+		for (let i = 1; i <= countOfDays; i++) {
+			var currDay = new Date();
+			currDay.setDate(begginingOfCalendar.getDate() + i - 1);
+			let td = `<td><a onclick="loadInfo('${currDay}')">${currDay.getDate()}</a></td>`;
+			weeks += td;
+			
+			if (i % 7 == 0) {
+				weeks += "</tr>";
+				weeks += "<tr>";
+			}
+		}
+
+		document.getElementById('weeks').innerHTML = weeks;
+
+
 		var key = "";
 		var list = "<tr><th>Item</th><th>Value</th></tr>\n";
 		var i = 0;

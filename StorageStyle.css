@@ -1,19 +1,24 @@
-td,th {
-	font-family: monospace;
-	padding: 4px;
-	background-color: #ccc;
-}
-
-label {
-	vertical-align: top;
-}
-
 #main {
 	border: 1px dotted blue;
 	padding: 6px;
 	background-color: #ccc;
 	margin-right: 50%;
 }
+
+td,th {
+	font-family: monospace;
+	padding: 4px;
+	background-color: #ccc;
+}
+
+td.currDay {
+	background-color: aquamarine;
+}
+
+label {
+	vertical-align: top;
+}
+
 
 #items_table {
 	border: 1px dotted blue;
