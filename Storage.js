@@ -39,53 +39,13 @@ function ClearAll() {
 	doShowAll();
 }
 //--------------------------------------------------------------------------------------
-// dynamically load the info of date
-function loadInfo(date) {
-	console.log("date");
-	console.log(date);
-}
-//--------------------------------------------------------------------------------------
 // dynamically populate the table with shopping list items
 //below step can be done via PHP and AJAX too. 
 function doShowAll() {
 	if (CheckBrowser()) {
-		var countOfDays = 35;
-		var today = new Date();
-		var todayDayOfWeek = today.getDay();
+		displayCalendar();
 
-		var begginingDay = today.getDate() - todayDayOfWeek + 1;
-		var begginingOfCalendar = new Date(today.getFullYear(), today.getMonth(), begginingDay);
-
-		var days = ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота', 'Неделя'];
-
-		var weeks = "<tr>";
-
-		for (let i = 0; i < days.length; i++) {
-			var tdw = "";
-			if (i === todayDayOfWeek - 1) {
-				tdw = `<td class="currDay">${days[i]}</td>`;
-			} else {
-				tdw = `<td>${days[i]}</td>`;
-			}
-			
-			weeks += tdw;
-		}
-
-		weeks += "</tr><tr>";
-
-		for (let i = 1; i <= countOfDays; i++) {
-			var currDay = new Date();
-			currDay.setDate(begginingOfCalendar.getDate() + i - 1);
-			let td = `<td><a onclick="loadInfo('${currDay}')">${currDay.getDate()}</a></td>`;
-			weeks += td;
-			
-			if (i % 7 == 0) {
-				weeks += "</tr>";
-				weeks += "<tr>";
-			}
-		}
-
-		document.getElementById('weeks').innerHTML = weeks;
+		displayLegend();
 
 
 		var key = "";
@@ -106,6 +66,89 @@ function doShowAll() {
 		document.getElementById('list').innerHTML = list;
 	} else {
 		alert('Cannot save shopping list as your browser does not support HTML 5');
+	}
+}
+
+function displayLegend() {
+	var key = "";
+	var list = "";
+	var i = 0;
+	//for more advance feature, you can set cap on max items in the cart
+	for (i = 0; i <= localStorage.length-1; i++) {
+		key = localStorage.key(i);
+		list += "<li>" + key + " - "
+				+ localStorage.getItem(key) + "</li>";
+	}
+
+	document.getElementById('sub-ul').innerHTML = list;
+}
+
+function displayCalendar() {
+	var countOfDays = 35;
+	var today = new Date();
+	var todayDayOfWeek = today.getDay();
+
+	var begginingDay = today.getDate() - todayDayOfWeek + 1;
+	var begginingOfCalendar = new Date(today.getFullYear(), today.getMonth(), begginingDay);
+
+	var days = ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота', 'Неделя'];
+
+	var weeks = "<tr>";
+
+	for (let i = 0; i < days.length; i++) {
+		var tdw = "";
+		if (i === todayDayOfWeek - 1) {
+			tdw = `<td class="currDay">${days[i]}</td>`;
+		} else {
+			tdw = `<td>${days[i]}</td>`;
+		}
+		
+		weeks += tdw;
+	}
+
+	weeks += "</tr><tr>";
+
+	for (let i = 1; i <= countOfDays; i++) {
+		var currDay = new Date();
+		currDay.setDate(begginingOfCalendar.getDate() + i - 1);
+		let td = `<td><a onclick="loadInfo('${currDay}')">${currDay.getDate()}</a></td>`;
+		weeks += td;
+		
+		if (i % 7 == 0) {
+			weeks += "</tr>";
+			weeks += "<tr>";
+		}
+	}
+
+	document.getElementById('weeks').innerHTML = weeks;
+}
+
+//--------------------------------------------------------------------------------------
+// dynamically load the info of date
+function loadInfo(date) {
+	console.log("date");
+	console.log(date);
+}
+//--------------------------------------------------------------------------------------
+// display and remove forms
+function displaySub() {
+	if (document.getElementById('add-sub').style.display === "none") {
+		if (document.getElementById('add-ass').style.display === "block") {
+			document.getElementById('add-ass').style.display = "none";
+		}
+		document.getElementById('add-sub').style.display = "block";
+	} else {
+		document.getElementById('add-sub').style.display = "none";
+	}
+}
+function displayAss() {
+	if (document.getElementById('add-ass').style.display === "none") {
+		if (document.getElementById('add-sub').style.display === "block") {
+			document.getElementById('add-sub').style.display = "none";
+		}
+		document.getElementById('add-ass').style.display = "block";
+	} else {
+		document.getElementById('add-ass').style.display = "none";
 	}
 }
 

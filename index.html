@@ -20,22 +20,51 @@
 	<form name=UniversitySchedule>
 		
 		<div class="main">
-			<div class="sub-leg">
-				<h4>Легенда</h4>
-				<ul class="sub-ul"></ul>
-			</div>
+			<div class="upper">
+					<div class="sub-leg">
+							<h4>Легенда</h4>
+							<ul class="sub-ul" id="sub-ul"></ul>
+						</div>
+						
+						<div class="calendar">
+							<table id="weeks">
 			
-			<div class="calendar">
-				<table id="weeks">
-
-				</table>
+							</table>
+						</div>
+			
+						<div class="day-info">
+							<h4>Информация за деня:</h4>
+						</div>
 			</div>
 
-			<div class="day-info">
-				<h4>Информация за деня:</h4>
-				
+			<div class="buttons">
+				<input type="button" value="Добави предмет" onclick="displaySub()">
+				<input type="button" value="Добави задача" onclick="displayAss()">
 			</div>
-		<div>
+
+			<div class="forms">
+				<div class="add-sub" id="add-sub" style="display: none;">
+					<h4>Предмет</h4>
+
+					<input type="text" id="sub-name" name="sub-name" placeholder="Наименование">
+					<input type="color" id="sub-color" name="sub-color" value="#e66465">
+					<input type="button" value="Добави" onclick="addSub()">
+				</div>
+
+				<div class="add-ass" id="add-ass" style="display: none;">
+					<h4>Задача</h4>
+
+					<textarea name="ass-desc" id="ass-desc" cols="30" rows="10" placeholder="Описание на задачата..."></textarea>
+					<select name="ass-sub" id="ass-sub"></select>
+					<input type="date" name="ass-date" id="ass-date">
+					<input type="button" value="Добави" onclick="addAss()">
+				</div>
+			</div>
+		</div>
+
+
+		<div  class="toDelete">
+
 		<div>
 			<table>
 				<tr>

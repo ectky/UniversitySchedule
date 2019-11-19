@@ -1,8 +1,27 @@
-#main {
-	border: 1px dotted blue;
-	padding: 6px;
-	background-color: #ccc;
-	margin-right: 50%;
+.upper {
+	display: grid;
+	grid-template-columns: 1fr 3fr 1fr;
+	grid-template-areas: 
+    "column-start column-middle column-end";
+	
+}
+
+.sub-leg {
+	grid-area: column-start;
+}
+
+.calendar {
+	grid-area: column-middle;
+
+}
+
+.day-info {
+	grid-area: column-end;
+
+}
+
+.toDelete {
+	grid-column: 1 / -1;
 }
 
 td,th {
