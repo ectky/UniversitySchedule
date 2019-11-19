@@ -46,17 +46,18 @@
 				<div class="add-sub" id="add-sub" style="display: none;">
 					<h4>Предмет</h4>
 
-					<input type="text" id="sub-name" name="sub-name" placeholder="Наименование">
-					<input type="color" id="sub-color" name="sub-color" value="#e66465">
-					<input type="button" value="Добави" onclick="addSub()">
+					<input type="text" id="subName" name="subName" placeholder="Наименование">
+					<input type="color" id="subColor" name="subColor" value="#e66465">
 				</div>
 
 				<div class="add-ass" id="add-ass" style="display: none;">
 					<h4>Задача</h4>
 
-					<textarea name="ass-desc" id="ass-desc" cols="30" rows="10" placeholder="Описание на задачата..."></textarea>
-					<select name="ass-sub" id="ass-sub"></select>
-					<input type="date" name="ass-date" id="ass-date">
+					<textarea name="assDesc" id="assDesc" cols="30" rows="10" placeholder="Описание на задачата..."></textarea>
+					<select name="assSub" id="assSub">
+						<option value="" disabled selected>Предмет</option>
+					</select>
+					<input type="date" name="assDate" id="assDate">
 					<input type="button" value="Добави" onclick="addAss()">
 				</div>
 			</div>
