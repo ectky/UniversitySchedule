@@ -200,8 +200,42 @@ function displayLegend() {
 	document.getElementById('sub-ul').innerHTML = list;
 }
 
+function getAssArr() {
+	let key = "";
+	let arr = [];
+	let i = 0;
+	//for more advance feature, you can set cap on max items in the cart
+	for (i = 0; i <= localStorage.length - 1; i++) {
+		key = localStorage.key(i);
+
+		if (key.startsWith("ass")) {
+			let obj = {key, value: JSON.parse(localStorage.getItem(key))};
+			arr.push(obj);
+		}
+	}	
+
+	return arr;
+}
+
+function getAssColor(index) {
+	let color = "";
+
+	for (i = 0; i <= localStorage.length - 1; i++) {
+		key = localStorage.key(i);
+
+		if (key === index) {
+			let obj = JSON.parse(localStorage.getItem(key));
+			color = obj.color;
+			break;
+		}
+	}
+
+	return color;
+}
+
 function displayCalendar() {
-	let obj 
+	let objArr = getAssArr();
+
 	let countOfDays = 35;
 	let today = new Date();
 	let todayDayOfWeek = today.getDay();
@@ -229,7 +263,17 @@ function displayCalendar() {
 	for (let i = 1; i <= countOfDays; i++) {
 		let currDay = new Date();
 		currDay.setDate(begginingOfCalendar.getDate() + i - 1);
-		let td = `<td><a onclick="loadInfo('${currDay}')">${currDay.getDate()}</a></td>`;
+		let td = `<td><a onclick="loadInfo('${currDay}')">${currDay.getDate()}<ul>`;
+
+		objArr.forEach(obj => {
+			let color = getAssColor(obj.value.subject);
+			let date = new Date(obj.value.date);
+			if (date.setHours(0, 0, 0, 0) == currDay.setHours(0, 0, 0, 0)) {
+				td += `<li style="color: ${color}"></li>`;
+			}
+		});
+
+		td += "</ul></a></td>";
 		weeks += td;
 
 		if (i % 7 == 0) {
