@@ -34,6 +34,9 @@
 			
 						<div class="day-info">
 							<h4>Информация за деня:</h4>
+							<div class="ass-list">
+								<ul id="ass-ul"></ul>
+							</div>
 						</div>
 			</div>
 
@@ -61,38 +64,6 @@
 					<input type="button" value="Добави" onclick="addAss()">
 				</div>
 			</div>
-		</div>
-
-
-		<div  class="toDelete">
-
-		<div>
-			<table>
-				<tr>
-
-					<td><b>Item:</b><input type=text name=name></td>
-					<td><b>Quantity:</b><input type=text name=data></td>
-
-				</tr>
-
-				<tr>
-					<td>
-					    <input type=button value="Save"   onclick="SaveItem()"> 
-					    <input type=button value="Update" onclick="ModifyItem()"> 
-					    <input type=button value="Delete" onclick="RemoveItem()">
-					</td>
-				</tr>
-			</table>
-		</div>
-
-		<div id="items_table">
-			<h3>Shopping List</h3>
-			<table id=list></table>
-			<p>
-				<label><input type=button value="Clear" onclick="ClearAll()">
-					<i>* Delete all items</i></label>
-			</p>
-		</div>
 		</div>
 	</form>
 

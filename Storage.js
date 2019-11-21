@@ -1,44 +1,44 @@
 let basicSubColor = "#e66465";
 
-//add new key=>value to the HTML5 storage
-function SaveItem() {
+// //add new key=>value to the HTML5 storage
+// function SaveItem() {
 
-	let name = document.forms.UniversitySchedule.name.value;
-	let data = document.forms.UniversitySchedule.data.value;
-	localStorage.setItem(name, data);
-	doShowAll();
+// 	let name = document.forms.UniversitySchedule.name.value;
+// 	let data = document.forms.UniversitySchedule.data.value;
+// 	localStorage.setItem(name, data);
+// 	doShowAll();
 
-}
-//------------------------------------------------------------------------------
-//change an existing key=>value in the HTML5 storage
-function ModifyItem() {
-	let name1 = document.forms.UniversitySchedule.name.value;
-	let data1 = document.forms.UniversitySchedule.data.value;
-	//check if name1 is already exists
+// }
+// //------------------------------------------------------------------------------
+// //change an existing key=>value in the HTML5 storage
+// function ModifyItem() {
+// 	let name1 = document.forms.UniversitySchedule.name.value;
+// 	let data1 = document.forms.UniversitySchedule.data.value;
+// 	//check if name1 is already exists
 
-	//check if key exists
-	if (localStorage.getItem(name1) != null) {
-		//update
-		localStorage.setItem(name1, data1);
-		document.forms.UniversitySchedule.data.value = localStorage.getItem(name1);
-	}
+// 	//check if key exists
+// 	if (localStorage.getItem(name1) != null) {
+// 		//update
+// 		localStorage.setItem(name1, data1);
+// 		document.forms.UniversitySchedule.data.value = localStorage.getItem(name1);
+// 	}
 
 
-	doShowAll();
-}
-//-------------------------------------------------------------------------
-//delete an existing key=>value from the HTML5 storage
-function RemoveItem() {
-	let name = document.forms.UniversitySchedule.name.value;
-	document.forms.UniversitySchedule.data.value = localStorage.removeItem(name);
-	doShowAll();
-}
-//-------------------------------------------------------------------------------------
-//restart the local storage
-function ClearAll() {
-	localStorage.clear();
-	doShowAll();
-}
+// 	doShowAll();
+// }
+// //-------------------------------------------------------------------------
+// //delete an existing key=>value from the HTML5 storage
+// function RemoveItem() {
+// 	let name = document.forms.UniversitySchedule.name.value;
+// 	document.forms.UniversitySchedule.data.value = localStorage.removeItem(name);
+// 	doShowAll();
+// }
+// //-------------------------------------------------------------------------------------
+// //restart the local storage
+// function ClearAll() {
+// 	localStorage.clear();
+// 	doShowAll();
+// }
 
 function checkIndexes() {
 	let str1 = "indexSub";
@@ -147,7 +147,7 @@ function addAss() {
 		document.forms.UniversitySchedule.assDate.value = "";
 	} else {
 		alert("Моля ти се въведи правилни данни, Диче.");
-	}	
+	}
 }
 //--------------------------------------------------------------------------------------
 // dynamically populate the table with shopping list items
@@ -161,22 +161,22 @@ function doShowAll() {
 		displayLegend();
 
 
-		let key = "";
-		let list = "<tr><th>Item</th><th>Value</th></tr>\n";
-		let i = 0;
-		//for more advance feature, you can set cap on max items in the cart
-		for (i = 0; i <= localStorage.length - 1; i++) {
-			key = localStorage.key(i);
-			list += "<tr><td>" + key + "</td>\n<td>"
-				+ localStorage.getItem(key) + "</td></tr>\n";
-		}
-		//if no item exists in the cart
-		if (list == "<tr><th>Item</th><th>Value</th></tr>\n") {
-			list += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td></tr>\n";
-		}
-		//bind the data to html table
-		//you can use jQuery too....
-		document.getElementById('list').innerHTML = list;
+		// let key = "";
+		// let list = "<tr><th>Item</th><th>Value</th></tr>\n";
+		// let i = 0;
+		// //for more advance feature, you can set cap on max items in the cart
+		// for (i = 0; i <= localStorage.length - 1; i++) {
+		// 	key = localStorage.key(i);
+		// 	list += "<tr><td>" + key + "</td>\n<td>"
+		// 		+ localStorage.getItem(key) + "</td></tr>\n";
+		// }
+		// //if no item exists in the cart
+		// if (list == "<tr><th>Item</th><th>Value</th></tr>\n") {
+		// 	list += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td></tr>\n";
+		// }
+		// //bind the data to html table
+		// //you can use jQuery too....
+		// document.getElementById('list').innerHTML = list;
 	} else {
 		alert('Cannot save shopping list as your browser does not support HTML 5');
 	}
@@ -209,28 +209,24 @@ function getAssArr() {
 		key = localStorage.key(i);
 
 		if (key.startsWith("ass")) {
-			let obj = {key, value: JSON.parse(localStorage.getItem(key))};
+			let obj = { key, value: JSON.parse(localStorage.getItem(key)) };
 			arr.push(obj);
 		}
-	}	
+	}
 
 	return arr;
 }
 
-function getAssColor(index) {
-	let color = "";
-
+function getAssSub(index) {
 	for (i = 0; i <= localStorage.length - 1; i++) {
 		key = localStorage.key(i);
 
 		if (key === index) {
 			let obj = JSON.parse(localStorage.getItem(key));
-			color = obj.color;
-			break;
+			return obj;
 		}
 	}
 
-	return color;
 }
 
 function displayCalendar() {
@@ -266,7 +262,7 @@ function displayCalendar() {
 		let td = `<td><a onclick="loadInfo('${currDay}')">${currDay.getDate()}<ul>`;
 
 		objArr.forEach(obj => {
-			let color = getAssColor(obj.value.subject);
+			let color = getAssSub(obj.value.subject).color;
 			let date = new Date(obj.value.date);
 			if (date.setHours(0, 0, 0, 0) == currDay.setHours(0, 0, 0, 0)) {
 				td += `<li style="color: ${color}"></li>`;
@@ -287,17 +283,51 @@ function displayCalendar() {
 
 //--------------------------------------------------------------------------------------
 // dynamically load the info of date
-function loadInfo(date) {
-	console.log("date");
-	console.log(date);
+function loadInfo(input) {
+	document.getElementById("ass-ul").innerHTML = "";
+	let date = new Date(input);
+	let hasAny = false;
+	let i;
+
+	for (i = 0; i <= localStorage.length - 1; i++) {
+		let key = localStorage.key(i);
+		if (key.startsWith("ass")) {
+			let assObj = JSON.parse(localStorage.getItem(key));
+			let assDate = new Date(assObj.date);
+			if (assDate.setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0)) {
+				hasAny = true;
+				displayAssInfo(assObj);
+			}
+		}
+	}
+
+	if (!hasAny) {
+		displayAssInfo();
+	}
 }
+
+function displayAssInfo(assObj) {
+	let text = "";
+	if (assObj) {
+		let subObj = getAssSub(assObj.subject);
+		text += `<li style="color: ${subObj.color}">`;
+		text += `<p><h5>${subObj.name}</h5></p>`;
+		text += `<p>${assObj.description}</p>`;
+		text += "</li>";
+	} else {
+		text += "Няма задачи за този ден. :Р"
+	}
+
+	document.getElementById("ass-ul").insertAdjacentHTML("beforeend", text);
+}
+
 //--------------------------------------------------------------------------------------
 // display and remove forms
 function displaySub(key) {
 	var element = document.getElementsByClassName("sub-btn");
 
 	if (element.length !== 0) {
-    	element[0].remove();		
+		element[0].remove();
 	}
 
 	if (key) {
@@ -309,15 +339,15 @@ function displaySub(key) {
 		document.forms.UniversitySchedule.subName.value = obj.name;
 		document.forms.UniversitySchedule.subColor.value = obj.color;
 
-		document.getElementById("add-sub").insertAdjacentHTML("beforeend", 
-		`<input type="button" class="sub-btn" value="Редактиране" onclick="editSub('${key}')">`);
+		document.getElementById("add-sub").insertAdjacentHTML("beforeend",
+			`<input type="button" class="sub-btn" value="Редактиране" onclick="editSub('${key}')">`);
 	} else {
 		if (document.getElementById('add-sub').style.display === "none") {
 			if (document.getElementById('add-ass').style.display === "block") {
 				document.getElementById('add-ass').style.display = "none";
 			}
-			document.getElementById("add-sub").insertAdjacentHTML("beforeend", 
-			'<input type="button" class="sub-btn"  value="Добави" onclick="addSub()">');
+			document.getElementById("add-sub").insertAdjacentHTML("beforeend",
+				'<input type="button" class="sub-btn"  value="Добави" onclick="addSub()">');
 			document.forms.UniversitySchedule.subName.value = "";
 			document.forms.UniversitySchedule.subColor.value = basicSubColor;
 			document.getElementById('add-sub').style.display = "block";
